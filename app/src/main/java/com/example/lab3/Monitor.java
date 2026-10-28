@@ -45,4 +45,9 @@ public class Monitor extends Service implements SensorEventListener{
         Log.d("Motion", "X: " + x + " Y: " + y + " Z: " + z);
 
     }
+
+    public void onDestroy(){
+        manager.unregisterListener(this);
+        super.onDestroy();
+    }
 }
