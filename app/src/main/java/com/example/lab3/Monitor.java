@@ -12,6 +12,12 @@ import android.util.Log;
 public class Monitor extends Service implements SensorEventListener{
     SensorManager manager;
     Sensor accelerometer;
+    boolean movementDetected = false;
+    boolean firstReading = true;
+    float lastX;
+    float lastY;
+    float lastZ;
+
     public Monitor() {
     }
 
@@ -38,11 +44,39 @@ public class Monitor extends Service implements SensorEventListener{
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+
+
         float x = event.values[0];
         float y = event.values[1];
         float z = event.values[2];
 
+
+
+
         Log.d("Motion", "X: " + x + " Y: " + y + " Z: " + z);
+
+        if (firstReading == true) {
+            lastX = x;
+            lastY = y;
+            lastZ = z;
+            firstReading = false;
+            return;
+        }
+
+        float changeX = Math.abs(x - lastX);
+        float changeY = Math.abs(y - lastY);
+        float changeZ = Math.abs(z - lastZ);
+
+        if(movementDetected == false && (changeX > 2 || changeY > 2 || changeZ > 2)){
+        movementDetected = true;
+        Intent intent = new Intent(this, MovementActivity.class);
+        intent.putExtra("time", System.currentTimeMillis());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);}
+
+        lastX = x;
+        lastY = y;
+        lastZ = z;
 
     }
 

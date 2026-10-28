@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
         start = findViewById(R.id.start);
         stop = findViewById(R.id.stop);
         status = findViewById(R.id.Status);
