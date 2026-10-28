@@ -1,5 +1,7 @@
 package com.example.lab3;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -37,12 +39,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void monitor(View view) {
-        Toast.makeText(this, "Start", Toast.LENGTH_SHORT).show();
         status.setText("Currently: Monitor");
+        Intent intent = new Intent(this, Monitor.class);
+        startService(intent);
+
     }
 
     public void stopMonitor(View view) {
-        Toast.makeText(this, "Stop", Toast.LENGTH_SHORT).show();
         status.setText("Currently: Not Monitor");
+        Intent intent = new Intent(this, Monitor.class);
+        stopService(intent);
     }
 }
